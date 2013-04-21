@@ -14,40 +14,40 @@ typedef elist(pkg) pkglist;
 typedef elist(str) strlist;
 
 int main() {
-    intlist one = el_init(int)();
-    pkglist two = el_init(pkg)();
-    strlist six = el_init(str)();
+    intlist one = el_init(int);
+    pkglist two = el_init(pkg);
+    strlist six = el_init(str);
 
     pkg foo = {.name = "Foo", .version = "0.1"};
     pkg bar = {.name = "Bar", .version = "1.2"};
 
-    el_push(int)(one, 1);
-    el_push(int)(one, 2);
-    el_push(int)(one, 3);
-    el_push(int)(one, 4);
-    el_push(int)(one, 5);
+    el_push(one, 1);
+    el_push(one, 2);
+    el_push(one, 3);
+    el_push(one, 4);
+    el_push(one, 5);
 
-    el_push(pkg)(two, foo);
-    el_push(pkg)(two, bar);
+    el_push(two, foo);
+    el_push(two, bar);
 
-    el_push(str)(six, "Spam");
+    el_push(six, "Spam");
 
     printf("Integers:\t");
-    el_println(int)(one);
+    el_println(one);
 
     printf("Structures:\t");
-    el_println(pkg)(two);
+    el_println(two);
 
     printf("Strings:\t");
-    el_println(str)(six);
+    el_println(six);
 
     printf("---\n");
-    printf("int list: Size: %zd\n", el_size(int)(one));
-    printf("int list: Get of fifth element: %d\n", el_get(int)(one, 4));
+    printf("int list: Size: %zd\n", el_size(one));
+    printf("int list: Get of fifth element: %d\n", el_get(one, 4));
 
-    el_free(int)(one);
-    el_free(pkg)(two);
-    el_free(str)(six);
+    el_free(one);
+    el_free(two);
+    el_free(six);
 
     return 0;
 }

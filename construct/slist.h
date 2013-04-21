@@ -8,13 +8,13 @@
 #define el_s(TYPE, NAME) e_list_ ## TYPE ## _ops. NAME
 
 /* Public shortcuts/API. */
-#define el_init(T) el_s(T, init)
-#define el_free(T) el_s(T, free)
-#define el_push(T) el_s(T, push)
-#define el_print(T) el_s(T, print)
-#define el_println(T) el_s(T, println)
-#define el_size(T) el_s(T, size)
-#define el_get(T) el_s(T, get)
+#define el_init(T) e_list_ ## T ## _ops.init();
+#define el_free(l) l->ops->free(l)
+#define el_push(l, val) l->ops->push(l, val)
+#define el_print(l) l->ops->print(l)
+#define el_println(l) l->ops->println(l)
+#define el_size(l) l->ops->size(l)
+#define el_get(l, idx) l->ops->get(l, idx)
 
 #define elist(T) \
     char T ## _dummy_char; \
@@ -28,12 +28,6 @@
         ele_ ## T * next; \
     }; \
     \
-    struct e_list_ ## T { \
-        size_t size; \
-        struct e_list_elem_ ## T * head; \
-        struct e_list_elem_ ## T * tail; \
-    }; \
-    \
     struct e_list_ ## T ## _ops_t { \
         el_## T* (*init)(); \
         void (*free)(el_##T* l); \
@@ -43,9 +37,36 @@
         void (*println)(el_##T* l); \
         size_t (*size)(el_##T* l); \
     };\
+    struct e_list_ ## T { \
+        size_t size; \
+        struct e_list_elem_ ## T * head; \
+        struct e_list_elem_ ## T * tail; \
+        struct e_list_ ## T ## _ops_t * ops; \
+    }; \
+    \
+    el_##T* e_list_ ## T ## _init (); \
+    void e_list_ ## T ## _free (el_##T* l); \
+    void e_list_ ## T ## _push (el_##T* l, T val); \
+    void e_list_ ## T ## _print (el_##T* l); \
+    void e_list_ ## T ## _println (el_##T* l); \
+    size_t e_list_ ## T ## _size (el_##T* l); \
+    T e_list_ ## T ## _get (el_##T* l, size_t idx); \
+    \
+    struct e_list_ ## T ## _ops_t e_list_ ## T ## _ops = { \
+        .init = e_list_ ## T ## _init, \
+        .free = e_list_ ## T ## _free, \
+        .push = e_list_ ## T ## _push, \
+        .print = e_list_ ## T ## _print, \
+        .println = e_list_ ## T ## _println, \
+        .size = e_list_ ## T ## _size, \
+        .get = e_list_ ## T ## _get, \
+    }; \
+    \
     \
     el_##T* e_list_ ## T ## _init () { \
-        return calloc(1, sizeof(struct e_list_ ## T)); \
+        el_##T * l = calloc(1, sizeof(struct e_list_ ## T)); \
+        l->ops = &e_list_ ## T ## _ops; \
+        return l; \
     } \
     \
     void e_list_ ## T ## _free (el_##T* l) { \
@@ -106,16 +127,6 @@
     size_t e_list_ ## T ## _size(el_##T* l) { \
         return l->size; \
     } \
-    \
-    struct e_list_ ## T ## _ops_t e_list_ ## T ## _ops = { \
-        .init = e_list_ ## T ## _init, \
-        .free = e_list_ ## T ## _free, \
-        .push = e_list_ ## T ## _push, \
-        .print = e_list_ ## T ## _print, \
-        .println = e_list_ ## T ## _println, \
-        .size = e_list_ ## T ## _size, \
-        .get = e_list_ ## T ## _get, \
-    }; \
     \
     typedef struct e_list_ ## T* \
 
