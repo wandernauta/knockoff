@@ -1,0 +1,89 @@
+# knockoff
+
+`knockoff` is a collection of macro's for C99 that enable you to easily
+define and use 'generic' collections, like those in the Standard Template
+Library from C++:
+
+````c
+#include "knockoff/slist.h"
+
+typedef elist(int) intlist;
+
+int main() {
+    intlist lst = el_init(int); // Make a new singly-linked list of ints.
+
+    el_push(lst, 1);            // Add some elements.
+    el_push(lst, 2);
+    el_push(lst, 3);
+
+    el_println(lst);            // Prints [1, 2, 3]
+    int x = el_get(lst, 0);     // x is now 1
+}
+````
+
+Currently, it supplies a fast singly-linked list container, including utilities
+for getting, finding and removing elements, as well as a function for dumping
+the whole list to stdout.
+
+To use `knockoff`, include the header that matches the collection you want to
+use, then write a typedef as shown above.
+
+### Usage
+
+`knockoff` is a header-only library. Put the `knockoff` directory in your
+project and include one of the headers whenever you need a container. There are
+no dependencies, and no special compile-time flags that need to be set.
+
+`knockoff` is designed to be warnings-clean and tested with all warnings on
+(`-Wall -Wextra -pedantic`).
+
+### FAQ
+
+**Q: You a silly man. C doesn't have templates.**
+
+A: True - on both counts. It does work, however: `knockoff` uses a load of
+macro trickery combined with a per-type table of function pointers. This is
+remotely similar to what C++ uses to support its virtual member function
+machinery.
+
+**Q: Can I use my own types (structs) with `knockoff`?**
+
+A: Probably, but you'll have to write some functions (callbacks) yourself -
+you'll have to tell knockoff how to print values of your type, for example.
+
+**Q: Can I have a list of pointers?**
+
+A: Yes. Write a typedef, then ask `knockoff` for an elist of that typedef. Just
+using `char*` or similar won't work.
+
+**Q: Is `knockoff` fast?**
+
+A: It should be plenty fast for most practical purposes, but it won't be as
+fast as either a linked list you write yourself, or the list implementation in
+the Linux kernel, for example.
+
+**Q: This is the ugliest hack I've ever seen.**
+
+A: Agreed.
+
+### License
+
+`knockoff` is Copyright (C) 2013 Wander Nauta.
+
+Permission is hereby granted, free of charge, to any person obtaining a copy of
+this software and associated documentation files (the "Software"), to deal in
+the Software without restriction, including without limitation the rights to
+use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies
+of the Software, and to permit persons to whom the Software is furnished to do
+so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+*The software is provided "as is", without warranty of any kind, express or
+implied, including but not limited to the warranties of merchantability,
+fitness for a particular purpose and noninfringement. In no event shall the
+authors or copyright holders be liable for any claim, damages or other
+liability, whether in an action of contract, tort or otherwise, arising from,
+out of or in connection with the software or the use or other dealings in the
+software.*
