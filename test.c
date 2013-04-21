@@ -42,6 +42,7 @@ int main() {
     el_println(str)(six);
 
     printf("---\n");
+    printf("int list: Size: %zd\n", el_size(int)(one));
     printf("int list: Get of fifth element: %d\n", el_get(int)(one, 4));
 
     el_free(int)(one);
