@@ -1,6 +1,6 @@
 # knockoff
 
-`knockoff` is a collection of macro's for C99 that enable you to easily
+*knockoff* is a collection of macro's for C99 that enable you to easily
 define and use 'generic' collections, like those in the Standard Template
 Library from C++:
 
@@ -25,38 +25,38 @@ Currently, it supplies a fast singly-linked list container, including utilities
 for getting, finding and removing elements, as well as a function for dumping
 the whole list to stdout.
 
-To use `knockoff`, include the header that matches the collection you want to
+To use *knockoff*, include the header that matches the collection you want to
 use, then write a typedef as shown above.
 
 ### Usage
 
-`knockoff` is a header-only library. Put the `knockoff` directory in your
+*knockoff* is a header-only library. Put the *knockoff* directory in your
 project and include one of the headers whenever you need a container. There are
 no dependencies, and no special compile-time flags that need to be set.
 
-`knockoff` is designed to be warnings-clean and tested with all warnings on
+*knockoff* is designed to be warnings-clean and tested with all warnings on
 (`-Wall -Wextra -pedantic`).
 
 ### FAQ
 
 **Q: You a silly man. C doesn't have templates.**
 
-A: True - on both counts. It does work, however: `knockoff` uses a load of
+A: True - on both counts. It does work, however: *knockoff* uses a load of
 macro trickery combined with a per-type table of function pointers. This is
 remotely similar to what C++ uses to support its virtual member function
 machinery.
 
-**Q: Can I use my own types (structs) with `knockoff`?**
+**Q: Can I use my own types (structs) with *knockoff*?**
 
 A: Probably, but you'll have to write some functions (callbacks) yourself -
 you'll have to tell knockoff how to print values of your type, for example.
 
 **Q: Can I have a list of pointers?**
 
-A: Yes. Write a typedef, then ask `knockoff` for an elist of that typedef. Just
+A: Yes. Write a typedef, then ask *knockoff* for an elist of that typedef. Just
 using `char*` or similar won't work.
 
-**Q: Is `knockoff` fast?**
+**Q: Is *knockoff* fast?**
 
 A: It should be plenty fast for most practical purposes, but it won't be as
 fast as either a linked list you write yourself, or the list implementation in
@@ -68,7 +68,7 @@ A: Agreed.
 
 ### License
 
-`knockoff` is Copyright (C) 2013 Wander Nauta.
+*knockoff* is Copyright (C) 2013 Wander Nauta.
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of
 this software and associated documentation files (the "Software"), to deal in
